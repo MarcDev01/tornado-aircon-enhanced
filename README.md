@@ -1,72 +1,131 @@
-# Tornado Aircon Custom Component for Home Assistant
+# Tornado Air Conditioner Enhanced for Home Assistant
 
-## Description
+A feature-rich Home Assistant integration for Tornado and AUX Wi-Fi air conditioners.
 
-This custom component integrates Tornado Aircon devices with Home Assistant, allowing you to control and monitor your air conditioning units directly from the Home Assistant interface.
+This project is based on the excellent work of @romfreiman and extends the original integration with additional controls, improved synchronization and better stability.
 
-## Installation
-
-### Option 1: Manual Installation
-
-1. Download the `custom_components` folder from this repository.
-2. Copy the `custom_components/tornado_aircon` directory into your Home Assistant `config/custom_components` directory.
-3. Restart Home Assistant.
-
-### Option 2: Installation via HACS
-
-1. Ensure you have [HACS](https://hacs.xyz/) installed in your Home Assistant setup.
-2. Navigate to **HACS** → **Integrations**.
-3. Click the three dots menu in the top right corner and select **Custom repositories**.
-4. Add the repository URL `https://github.com/romfreiman/tornado-aircon-custom-component` and select the category as **Integration**.
-5. Find and install the "Tornado Air Conditioner" integration from the HACS store.
-6. Restart Home Assistant.
-
-## Configuration
-
-To set up the Tornado Air Conditioner integration in Home Assistant:
-
-1. Navigate to **Settings** → **Devices & Services**
-2. Click **Add Integration**
-3. Search for "Tornado Air Conditioner"
-4. In the configuration screen, enter:
-   - Your Tornado app email address
-   - Your Tornado app password
-   - Region: Select USA (Note: Verified working with Israel-based deployments)
-5. Click **Submit** to complete the setup
+---
 
 ## Features
 
-- Control power, mode, temperature, and fan speed of your Tornado Aircon units.
-- Monitor current temperature, humidity, and operational status.
-- Automate your air conditioning based on Home Assistant automations.
+### Climate
+- Power
+- HVAC mode
+- Target temperature
+- Fan mode
+- Swing mode
 
-## Usage
+### Additional switches
+- Clean
+- Anti Fungus
+- Health
+- Display
+- Eco Mode
+- Comfort Wind
+- Auxiliary Heat
+- Sleep
+- Sleep DIY
+- Child Lock
+- Power Limit Enable
 
-Once configured, you will see new entities in Home Assistant for each Tornado Aircon unit. You can use these entities in automations, scripts, and dashboards.
+### Additional entities
+- Power Limit slider (30–100%)
+- Current temperature
+- Target temperature
+- Raw operating mode
+- Raw fan mode
 
-## Troubleshooting
+### Improvements
+- Coordinator-based architecture
+- Live synchronization with the Tornado app
+- Automatic state refresh after changes
+- Reduced cloud requests
+- Improved timeout handling
+- Better Home Assistant responsiveness
 
-If you encounter any issues, please check the Home Assistant logs for error messages. You can also open an issue on the [GitHub repository](https://github.com/romfreiman/tornado-aircon-custom-component/issues).
+---
 
-## Contributing
+# Installation
 
-Contributions are welcome! Please open a pull request with your changes. Make sure to follow the [contributing guidelines](CONTRIBUTING.md).
+## HACS (recommended)
 
-## License
+1. Open HACS.
+2. Open **Custom repositories**.
+3. Add:
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+```
+https://github.com/MarcDev01/tornado-aircon-enhanced
+```
 
-## Resources
+Category:
 
-- [Home Assistant Documentation](https://www.home-assistant.io/docs/)
-- [Home Assistant Community Forum](https://community.home-assistant.io/)
-- [HACS Documentation](https://hacs.xyz/docs/)
+```
+Integration
+```
 
-## Acknowledgements
+Install the integration and restart Home Assistant.
 
-Special shoutout to [@maeek](https://github.com/maeek) for their great work on [ha-aux-cloud](https://github.com/maeek/ha-aux-cloud) as a baseline for this Home Assistant component.
-Also, thanks to [@thewh1teagle](https://github.com/thewh1teagle) for their excellent work on [tornado-control](https://github.com/thewh1teagle/tornado-control) which inspired this component.
+---
 
-## TODO
+## Manual
 
-- Add a custom integration icon.
+Copy
+
+```
+custom_components/tornado
+```
+
+to
+
+```
+config/custom_components/
+```
+
+Restart Home Assistant.
+
+---
+
+# Configuration
+
+Settings → Devices & Services → Add Integration
+
+Fill in:
+
+- Email
+- Password
+- Region
+
+Done.
+
+---
+
+# Roadmap
+
+Planned features:
+
+- Native diagnostics
+- Better error recovery
+- Automatic cloud reconnect
+- Horizontal swing support (where available)
+- More device parameters
+- Reduced cloud polling
+
+---
+
+# Credits
+
+Original integration:
+- @romfreiman
+
+Based on:
+- @maeek (ha-aux-cloud)
+- @thewh1teagle (tornado-control)
+
+Enhanced version:
+- MarcDev01
+
+---
+
+# License
+
+MIT License

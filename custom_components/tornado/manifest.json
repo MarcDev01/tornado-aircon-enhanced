@@ -1,12 +1,12 @@
 {
     "domain": "tornado",
-    "name": "Tornado Air Conditioner",
-    "codeowners": ["@romfreiman"],
+    "name": "Tornado Air Conditioner Enhanced",
+    "codeowners": ["@MarcDev01"],
     "config_flow": true,
     "dependencies": [],
-    "documentation": "https://github.com/romfreiman/tornado-aircon-custom-component",
+    "documentation": "https://github.com/MarcDev01/tornado-aircon-enhanced",
     "iot_class": "cloud_polling",
-    "issue_tracker": "https://github.com/romfreiman/tornado-aircon-custom-component/issues",
+    "issue_tracker": "https://github.com/MarcDev01/tornado-aircon-enhanced/issues",
     "requirements": ["aiohttp", "async_lru", "tenacity"],
-    "version": "1.0.0"
+    "version": "1.1.0"
 }

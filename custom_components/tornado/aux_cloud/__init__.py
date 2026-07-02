@@ -497,6 +497,7 @@ class AuxCloudAPI:
             f"{self.url}/appsync/group/{device_endpoint}",
             data='{"pids":[]}' if not shared else '{"endpointId":""}',
             headers=self._get_headers(familyid=family_id),
+            timeout=aiohttp.ClientTimeout(total=30),
         ) as response:
             data = await response.text()
             json_data = json.loads(data)
@@ -521,27 +522,21 @@ class AuxCloudAPI:
                 # Process devices and update internal cache
                 processed_devices = []
                 for dev in devices:
-                    # Create tasks for all API calls for each device
-                    state_task = self.query_device_state(
-                        dev["endpointId"], dev["devSession"]
-                    )
+                    # Create tasks for required API calls for each device
                     params_task = self.get_device_params(dev)
                     ambient_task = self.get_device_params(dev, ["mode"])
-                    results = await asyncio.gather(
-                        state_task, params_task, ambient_task, return_exceptions=True
+                    
+                    params_result, ambient_result = await asyncio.gather(
+                        params_task,
+                        ambient_task,
+                        return_exceptions=True,
                     )
-
-                    state_result, params_result, ambient_result = results
-
-                    # Handle results, checking for exceptions
-                    if not isinstance(state_result, Exception):
-                        dev["state"] = state_result["data"][0]["state"]
-
+                    
                     if not isinstance(params_result, Exception):
                         dev["params"] = params_result
-
+                    
                     if not isinstance(ambient_result, Exception) and "params" in dev:
-                        dev["params"]["envtemp"] = ambient_result["envtemp"]
+                        dev["params"]["envtemp"] = ambient_result.get("envtemp")
                     _LOGGER.debug("Processed device: %s", dev)
                     processed_devices.append(dev)
 

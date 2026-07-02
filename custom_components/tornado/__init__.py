@@ -11,13 +11,19 @@ from homeassistant.const import Platform
 
 # Updated import name
 from .aux_cloud import AuxCloudAPI
+from .coordinator import AuxCloudDataUpdateCoordinator
 from .const import CONF_EMAIL, CONF_PASSWORD, CONF_REGION, DOMAIN
 
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
 
-PLATFORMS: list[Platform] = [Platform.CLIMATE]
+PLATFORMS: list[Platform] = [
+    Platform.CLIMATE,
+    Platform.NUMBER,
+    Platform.SWITCH,
+    Platform.SENSOR,
+]
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -40,6 +46,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     try:
         await client.login()
         await client.refresh()
+        
+        coordinator = AuxCloudDataUpdateCoordinator(hass, client)
+        await coordinator.async_config_entry_first_refresh()
+        
     except Exception:
         await client.cleanup()
         await session.close()
@@ -47,6 +57,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         return False
 
     hass.data[DOMAIN][entry.entry_id]["client"] = client
+    hass.data[DOMAIN][entry.entry_id]["coordinator"] = coordinator
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
